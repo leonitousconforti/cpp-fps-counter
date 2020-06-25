@@ -30,3 +30,5 @@ int main()
 ```sh
 g++ -g -Wall example.cpp -o example -std=c++11
 ```
+
+Example expected output should be close to FPS is: 50
