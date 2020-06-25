@@ -62,7 +62,7 @@ class Fps_counter
         m_fpscount++;
 
         // one second elapsed?
-        if (m_fpsinterval.value() > 1000)
+        if (m_fpsinterval.value() >= 1)
         {
             // save the current counter value to m_fps
             m_fps = m_fpscount;

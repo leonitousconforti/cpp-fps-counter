@@ -7,7 +7,7 @@ int main()
     Fps_counter fps;
 
     // Example processing loop
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 10000; i++)
     {
         // Some really complex operation
         usleep(20 * 1000);
