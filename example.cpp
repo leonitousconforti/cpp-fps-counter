@@ -1,10 +1,3 @@
-# cpp fps counter
-
-C++ library for calculating the fps/time for an event to run
-
-## C++ Example
-
-```cpp
 #include "fps_counter.hpp"
 #include <iostream>
 #include <unistd.h>
@@ -23,10 +16,3 @@ int main()
         std::cout << "FPS is: " << fps.get() << std::endl;
     }
 }
-```
-
-### Compile Example File
-
-```sh
-g++ -g -Wall example.cpp -o example -std=c++11
-```
