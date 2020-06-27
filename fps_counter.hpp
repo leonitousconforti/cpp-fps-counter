@@ -30,22 +30,24 @@ SOFTWARE.
 #include <chrono>
 #include <ctime>
 
+// Class for timing events
 class Interval
 {
   private:
-    typedef std::chrono::high_resolution_clock Time;
-    typedef std::chrono::duration<float> fsec;
-    std::time_t initial_;
+    typedef std::chrono::steady_clock Time;
+    std::chrono::steady_clock::time_point initial_;
 
   public:
-    inline Interval() : initial_(std::time(0)) {}
+    inline Interval() : initial_(Time::now()) {}
     virtual ~Interval() {}
     inline unsigned int value() const
     {
-        return std::time(0) - initial_;
+        return std::chrono::duration_cast<std::chrono::milliseconds>
+            (Time::now() - initial_).count();
     }
 };
 
+// Class for calculating the fps of a loop or function
 class Fps_counter
 {
   protected:
@@ -62,7 +64,7 @@ class Fps_counter
         m_fpscount++;
 
         // one second elapsed?
-        if (m_fpsinterval.value() >= 1)
+        if (m_fpsinterval.value() >= 1000)
         {
             // save the current counter value to m_fps
             m_fps = m_fpscount;
@@ -76,5 +78,10 @@ class Fps_counter
     unsigned int get() const
     {
         return m_fps;
+    }
+
+    unsigned int getFrameCount() const
+    {
+        return m_fpscount;
     }
 };
