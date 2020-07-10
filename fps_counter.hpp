@@ -40,14 +40,14 @@ class Interval
   public:
     inline Interval() : initial_(Time::now()) {}
     virtual ~Interval() {}
-    
+
     inline unsigned int value() const
     {
         return std::chrono::duration_cast<std::chrono::microseconds>
             (Time::now() - initial_).count();
     }
-    
-    void reset()
+
+    inline void reset()
     {
         initial_ = Time::now();
     }
@@ -87,7 +87,7 @@ class Fps_counter
         {
             return m_fpscount;
         }
-        
+
         return m_fps;
     }
 
