@@ -40,10 +40,16 @@ class Interval
   public:
     inline Interval() : initial_(Time::now()) {}
     virtual ~Interval() {}
+    
     inline unsigned int value() const
     {
-        return std::chrono::duration_cast<std::chrono::milliseconds>
+        return std::chrono::duration_cast<std::chrono::microseconds>
             (Time::now() - initial_).count();
+    }
+    
+    void reset()
+    {
+        initial_ = Time::now();
     }
 };
 
@@ -56,7 +62,7 @@ class Fps_counter
     Interval m_fpsinterval;
 
   public:
-    Fps_counter() : m_fps(0), m_fpscount(0) {}
+    Fps_counter() : m_fps(0), m_fpscount(0), m_fpsinterval(Interval()) {}
 
     void update()
     {
@@ -64,19 +70,24 @@ class Fps_counter
         m_fpscount++;
 
         // one second elapsed?
-        if (m_fpsinterval.value() >= 1000)
+        if (m_fpsinterval.value() >= 1000000)
         {
             // save the current counter value to m_fps
             m_fps = m_fpscount;
 
             // reset the counter and the interval
             m_fpscount = 0;
-            m_fpsinterval = Interval();
+            m_fpsinterval.reset();
         }
     }
 
     unsigned int get() const
     {
+        if (m_fps == 0)
+        {
+            return m_fpscount;
+        }
+        
         return m_fps;
     }
 
